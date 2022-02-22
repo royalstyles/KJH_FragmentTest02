@@ -1,0 +1,47 @@
+package com.example.kjh_fragmenttest02;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+
+public class splash_screen extends AppCompatActivity {
+
+    public static boolean flag = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        Log.d(getClass().getName(), "onCreate()");
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash_screen);
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        final Handler handler = new Handler();
+        final Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(splash_screen.this, MainActivity.class);
+                startActivity(intent);
+            }
+        };
+        handler.postDelayed(r, 100);
+    }
+
+    @Override
+    protected void onStart() {
+        Log.d(getClass().getName(), "onStart()");
+
+        if(flag){
+            splash_screen.this.finish();
+            System.exit(0);
+            super.onStart();
+        }else {
+            super.onStart();
+        }
+    }
+}
