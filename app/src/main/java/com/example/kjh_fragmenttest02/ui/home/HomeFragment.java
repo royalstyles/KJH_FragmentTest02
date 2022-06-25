@@ -34,7 +34,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,7 +70,7 @@ public class HomeFragment extends Fragment implements NewsItemClicked {
     private void fetch_date(){
         Log.d(getClass().getName(), "fetch_date()");
 
-        String url = "https://newsapi.org/v2/everything?q=apple&from=2022-02-22&to=2022-02-22&sortBy=popularity&apiKey=63c99fa5e438467189add97cafe6145f";
+        String url = "https://newsapi.org/v2/everything?q=apple&from=" + getDate() + "&to=" + getDate() + "&sortBy=popularity&apiKey=63c99fa5e438467189add97cafe6145f";
 //        String url = "https://newsapi.org/v2/top-headlines?country=in&category=general&apiKey=f25bd7cf2bf341fa8db0f6f426364335";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -125,5 +127,15 @@ public class HomeFragment extends Fragment implements NewsItemClicked {
         builder.setToolbarColor(ContextCompat.getColor(getContext(), com.google.android.material.R.color.design_default_color_primary));
         CustomTabsIntent customTabsIntent = builder.build();
         customTabsIntent.launchUrl(getContext(), Uri.parse(url));
+    }
+
+    // 현재 시간을 "yyyy-MM-dd hh:mm:ss"로 표시하는 메소드
+    private String getDate() {
+        long now = System.currentTimeMillis();
+        Date date = new Date(now - 1);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String getDate = dateFormat.format(date);
+
+        return getDate;
     }
 }
